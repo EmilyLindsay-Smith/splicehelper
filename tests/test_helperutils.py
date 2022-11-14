@@ -14,7 +14,6 @@ def test_create_df_from_input_csv(filename, sample_df):
 	print(testdf.head())
 	pd.testing.assert_frame_equal(testdf, sample_df)
 
-
 def test_merge_df_with_another_difcol(sample_df, sample_df2, sample_df_merged):
 	testdf = merge_df_with_another(sample_df, sample_df2, 'List', 'Fruit')
 	pd.testing.assert_frame_equal(testdf,sample_df_merged)
