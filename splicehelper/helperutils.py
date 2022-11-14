@@ -26,9 +26,13 @@ def create_df_from_input(filename):
 	return df
 
 #Merge with another CSV file
-def merge_df_with_another(main_df, other_df, merge_on_main_df, merge_on_other_df, how='left'):
+def merge_df_with_another(main_df, other_df, merge_on_main_df, merge_on_other_df='', how='left'):
 	try:
-		df = main_df.merge(other_df, left_on=merge_on_main_df, right_on=merge_on_other_df, how=how)
+		if merge_on_other_df == '':
+			df = main_df.merge(other_df, on=merge_on_main_df,how=how)
+		else:
+			df = main_df.merge(other_df, left_on=merge_on_main_df, right_on=merge_on_other_df, how=how)
+			df.drop(merge_on_other_df, axis=1, inplace=True)
 	except:
 		raise Exception('Error with DF Merging')
 	return df
@@ -128,7 +132,7 @@ def print_file(df, splice_header, outputfilename, title):
 #print to csv then to txt 
 
 def get_column_names(df):
-	print(list(df.columns))
+	return list(df.columns)
 
 def run_splice_helper(input_file, listname, coding_array, isi1, isi2, outputfilename, title, input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
 	try: 
