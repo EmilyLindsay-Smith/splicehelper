@@ -9,11 +9,14 @@ import os
 
 #Create df from csv or excel input
 def create_df_from_input(filename):
-
+	#TODO: check if file exists, and if not raise error
 	file_extension = filename.split('.')[-1] 
-	excel_extensions = ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'] #needs openpxyl to resolve paths
+	excel_extensions = ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'] 
+	#To Resolve these paths:
+	##Excel: openpyxl
+	##ODS: odfpy
+	##XLS: xlrd
 
-	print(file_extension)
 	if file_extension == 'csv':
 		df = pd.read_csv(filename)
 	elif file_extension in excel_extensions:
@@ -113,11 +116,10 @@ def configure_splice_header(coding_array):
 	return splice_header
 
 
-
+#print to csv then to txt 
 def print_file(df, splice_header, outputfilename, title):
 	splice_header = splice_header
 	title = '! ' + title + '\n'
-	print(df)
 	#Creates temporary .csv to avoid extra spaces created by df.to_String() - this is removed
 	temp = outputfilename + '.csv' #so if multiple runs at once no clashes
 	df.to_csv(temp, index=None, sep=' ', header=False, na_rep='NULL', quoting=3, escapechar=' ', encoding='utf-8')
@@ -130,7 +132,7 @@ def print_file(df, splice_header, outputfilename, title):
 		f.write(splice_header)
 		f.write(splice_contents)
 
-#print to csv then to txt 
+##Useful Functions
 
 def get_column_names(df):
 	return list(df.columns)
@@ -160,11 +162,112 @@ def run_splice_helper(input_file, listname, coding_array, isi1, isi2, outputfile
 	except Exception as e:
 		print(e)
 
-#input_file = 'C:/Users/emily/OneDrive/Documents/01_Work/Projects/Rhyme_Primig/SpliceCreation/Exp_Practice.csv'
 
-#print(run_splice_helper(input_file, 'Word', ['Test'], 500, 1000, 'testoutput.txt', 'Emily Test File'))
+###CommandLineFunctions####
+def get_mainfile(main_or_second):
+	def request_file(main_or_second):
+		try:
+			input_file = input(f'What is your {main_or_second} filename?')
+			df = create_df_from_input(input_file)
+			return df
+		except FileNotFoundError:
+			print('We did not recognise that filename. Please try again:')
+			request_file(main_or_second)
+	df = request_file(main_or_second)
+	print(f'This is the start of your {main_or_second} file: \n')
+	print(df.head())
+	answer = input('Is this the right file? Y/N \n')
+	if answer.lower() == 'n':
+		get_mainfile(main_or_second)
+	else:
+		return df
 
-input_path = 'C:\\Users\\emily\\OneDrive\\Documents\\01_Work\\SkillDevelopment\\Programming\\Projects\\SpliceHelper\\splicehelper\\'
-input_file = input_path+'Exp1_DPOrder.xlsx'
-input_file2 =  input_path+'Exp123_StimuliFreqCondition.xlsx'
-print(run_splice_helper(input_file, 'LISTA', ['Code', 'Frequency'], 500, 1000, 'testmerge.txt', 'Emily Test Merge File', input_file2, 'LISTA', 'Item'))
+def merge_files(df):
+	need_to_merge = input('Do you need to merge this with another file? Y/N \n')	
+	
+	def merger(df):
+		df2 = get_mainfile('other')
+		on_main = input('What is the shared column name in your main file?\n Column Name: ')
+		on_second = input('What is the shared column name in your other file?\n Column Name: ')
+		df_new = merge_df_with_another(df, df2, on_main, on_second)
+		print('This is the merger of your two files: \n')
+		print(df_new.head())
+		answer = input('Does this look right? Y/N \n')
+		if answer.lower() == 'n':
+			print("Let's try again.")
+			merger(df)	
+		else:
+			return df_new			
+
+	if need_to_merge.lower() == 'y':
+		df = merger(df)
+		return df
+	else:
+		return df	
+
+def get_specifics(df):
+	isi1 = input('What is your first interstimulus interval?\n First ISI: ')
+	isi2 = input('What is your second interstimulus interval?\n Second ISI: ')
+	print('The column names available are: \n')
+	print(df)
+	print(get_column_names(df))
+	listname = input('What is the column name for your stimulus list? \n')
+
+	def get_codearray(codearray, df):
+		codearray = codearray
+		print('Available Columns: ', get_column_names(df))
+		print('Columns Selected to Include: ', codearray)
+		item = input('What column do you want to include? \nColumn: ')
+		if item in get_column_names(df):
+			codearray.append(item)
+			print('So far you have selected: ', codearray)
+		else:
+			print('You have not typed something that matches the column names available :( \n')
+			print('The options are: ', get_column_names(df))
+		answer = input('Do you want to add another column? Y/N \n')
+		if answer.lower() == 'y':
+			get_codearray(codearray, df)
+		return codearray
+
+	codearray = []
+	answer = input('Do you need to include other columns for the coding? Y/N \n')
+	if answer.lower() == 'y':	
+		codearray = get_codearray(codearray, df)
+			
+	print('Creating your splice file...')
+	df = create_df_with_splice_columns(df, isi1, isi2)
+	df = create_subset_df_for_list(df, listname, codearray)
+	df = add_wav_to_stimuli(df, listname)
+	splice_header = configure_splice_header(codearray)
+	return df , splice_header
+
+def print_splice(df, splice_header):
+	print('Your splice file is almost ready!\n')
+	title = input('What do you want your title to be on the first line of the splice file?')
+	outputfilename = input('What do you want your output file to be called?\n Do not include file extension \n Filename: ') + '.txt'
+	print_file(df, splice_header, outputfilename, title)
+	print('Your splice file is has been created.')
+	answer = input('Do you need to make more splice files from the same input files? i.e. new lists\n Y/N \n')
+	if answer.lower() == 'n':
+		return 'finished'
+	else:
+		print("OK, let's make another one!")
+		return 'again'
+
+def create_inputs():
+	df = get_mainfile('main')
+	df = merge_files(df)
+	return df
+
+def create_files(df):
+	df_final, splice_header = get_specifics(df)
+	repeat_query = print_splice(df_final, splice_header)
+	if repeat_query == 'again':
+		create_files(df)
+	else:
+		print('Thanks for using me')
+
+
+print('Welcome to SpliceHelper! \n My job is to help you create splice files from your data')
+df = create_inputs()
+create_files(df)
