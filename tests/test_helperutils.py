@@ -5,6 +5,16 @@ from splicehelper.helperutils import *
 ####################################################################################
 #TESTS
 
+@pytest.mark.parametrize('filename', [
+	'tests/test.csv', 'tests/test.ods', 'tests/test.xls', 'tests/test.xlsm', 'tests/test.xlsx'
+	])
+
+def test_create_df_from_input_csv(filename, sample_df):
+	testdf = create_df_from_input(filename)
+	print(testdf.head())
+	pd.testing.assert_frame_equal(testdf, sample_df)
+
+
 def test_merge_df_with_another_difcol(sample_df, sample_df2, sample_df_merged):
 	testdf = merge_df_with_another(sample_df, sample_df2, 'List', 'Fruit')
 	pd.testing.assert_frame_equal(testdf,sample_df_merged)
@@ -15,22 +25,18 @@ def test_merge_df_with_another_samecol(sample_df, sample_df3, sample_df_merged):
 
 def test_create_df_with_splice_columns(sample_df, sample_df_spliced):
 	testdf = create_df_with_splice_columns(sample_df, 500, 1000)
-	print('D')
 	pd.testing.assert_frame_equal(testdf, sample_df_spliced)
 
 def test_create_subset_df_for_list(sample_df_spliced, sample_df_spliced_subset):
 	testdf = create_subset_df_for_list(sample_df_spliced, 'List', ['Code', 'Other'])
-	print('A')
 	pd.testing.assert_frame_equal(testdf, sample_df_spliced_subset)
 
 def test_add_wav_to_stimuli(sample_df_spliced, sample_df_waved):
 	testdf = add_wav_to_stimuli(sample_df_spliced, 'List')
-	print('B')
 	pd.testing.assert_frame_equal(testdf, sample_df_waved)
 
 def test_add_wav_to_stimuli_2(sample_df_spliced_2, sample_df_waved):
 	testdf = add_wav_to_stimuli(sample_df_spliced_2, 'List')
-	print('C')
 	pd.testing.assert_frame_equal(testdf, sample_df_waved)
 
 def test_configure_splice_header(sample_splice_header):

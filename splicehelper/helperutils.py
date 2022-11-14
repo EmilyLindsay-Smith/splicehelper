@@ -13,6 +13,7 @@ def create_df_from_input(filename):
 	file_extension = filename.split('.')[-1] 
 	excel_extensions = ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'] #needs openpxyl to resolve paths
 
+	print(file_extension)
 	if file_extension == 'csv':
 		df = pd.read_csv(filename)
 	elif file_extension in excel_extensions:
