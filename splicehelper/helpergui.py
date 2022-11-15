@@ -43,6 +43,8 @@ class MainWindow(QMainWindow):
 		self.page3 = ThirdDisplay()
 		self.stackLayout.addWidget(self.page3)
 
+		self.page4 = FourthDisplay()
+		self.stackLayout.addWidget(self.page4)
 		#Define buttonLayout buttons to display all the time
 		self.btn = QPushButton("Next")
 		self.buttonLayout.addWidget(self.btn)
@@ -63,6 +65,11 @@ class MainWindow(QMainWindow):
 
 class FirstDisplay(QWidget):
 	#TODO: Welcome to SpliceHelper. Import main file & second file if needed
+		# Greeting Label
+		# Explain Label
+		# TextBox to give file name - consider validation?
+		# Explain Label for merge file
+		# TextBox to give file name - consider validation?
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
@@ -73,6 +80,9 @@ class FirstDisplay(QWidget):
 
 class SecondDisplay(QWidget):
 	#TODO: Merge files if needed
+		# Show snippets of both files, check if correct and if not return to first screen
+		# Get merge_on for main file
+		# Get merge_on for second file 
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
@@ -83,6 +93,8 @@ class SecondDisplay(QWidget):
 
 class ThirdDisplay(QWidget):
 	#TODO: Get ISIs, CodeArray COlumns, Listname, title, filename
+		# Show snippet of dataframe in use
+		# TextBoxes for ISIs, CodeArray COlumns, Listname, title, filename
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
@@ -92,6 +104,9 @@ class ThirdDisplay(QWidget):
 
 class FourthDisplay(QWidget):
 	#TODO: Announce file is ready, give option to start again from various stages or finish.
+		# Explain situation, preferably repeat filename
+		# Buttons for different restart points 
+		# Finish button to close application 
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
