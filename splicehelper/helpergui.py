@@ -128,9 +128,24 @@ class SecondDisplay(QWidget):
 		displayLayout = QVBoxLayout()
 		self.temp_label = QLabel("Welcome to the Second Display")
 		displayLayout.addWidget(self.temp_label)
+		
+		self.instructions_label = QLabel("Let me know the following values so I can merge your files:")
+		displayLayout.addWidget(self.instructions_label)
+
+		self.merge_details=QWidget(self)
+		self.form_layout = QFormLayout()
+		self.merge_details.setLayout(self.form_layout)
+
+		self.entry1 = QLineEdit(self.merge_details, placeholderText='Column Name', clearButtonEnabled=True)
+		self.entry1_label = 'Main File Row to Merge On:'
+		self.form_layout.addRow(self.entry1_label, self.entry1)
+
+		self.entry2 = QLineEdit(self.merge_details, placeholderText='Column Name', clearButtonEnabled=True)
+		self.entry2_label = 'Merge File Row to Merge On:'
+		self.form_layout.addRow(self.entry2_label, self.entry2)
+
+		displayLayout.addWidget(self.merge_details)
 		self.setLayout(displayLayout)
-
-
 class ThirdDisplay(QWidget):
 	#TODO: Get ISIs, CodeArray COlumns, Listname, title, filename
 		# Show snippet of dataframe in use
@@ -140,6 +155,42 @@ class ThirdDisplay(QWidget):
 		displayLayout = QVBoxLayout()
 		self.temp_label = QLabel("Welcome to the Third Display")
 		displayLayout.addWidget(self.temp_label)
+		
+		self.instructions_label = QLabel("Let me know the following values so I can build your splice file:")
+		displayLayout.addWidget(self.instructions_label)
+
+		self.specific_details=QWidget(self)
+		self.form_layout = QFormLayout()
+		self.specific_details.setLayout(self.form_layout)
+
+		self.entry1 = QLineEdit(self.specific_details, placeholderText='title', clearButtonEnabled=True)
+		self.entry1_label = 'Title:'
+		self.form_layout.addRow(self.entry1_label, self.entry1)
+
+		self.entry2 = QLineEdit(self.specific_details, placeholderText='ISI', clearButtonEnabled=True)
+		self.entry2_label = 'ISI 1:'
+		self.form_layout.addRow(self.entry2_label, self.entry2)
+
+		self.entry3 = QLineEdit(self.specific_details, placeholderText='ISI', clearButtonEnabled=True)
+		self.entry3_label = 'ISI 2:'
+		self.form_layout.addRow(self.entry3_label, self.entry3)
+		displayLayout.addWidget(self.specific_details)
+
+		self.entry4 = QLineEdit(self.specific_details, placeholderText='Column Name', clearButtonEnabled=True)
+		self.entry4_label = 'Stimulus Column Name:'
+		self.form_layout.addRow(self.entry4_label, self.entry4)
+		displayLayout.addWidget(self.specific_details)
+
+		self.entry5 = QLineEdit(self.specific_details, placeholderText="['Column1', 'Column2']", clearButtonEnabled=True)
+		self.entry5_label = 'Array of Coding Columns:'
+		self.form_layout.addRow(self.entry5_label, self.entry5)
+		displayLayout.addWidget(self.specific_details)
+
+		self.entry6 = QLineEdit(self.specific_details, placeholderText="path/to/filename_without_extension", clearButtonEnabled=True)
+		self.entry6_label = 'Output Filename and Path:'
+		self.form_layout.addRow(self.entry6_label, self.entry6)
+
+		displayLayout.addWidget(self.specific_details)
 		self.setLayout(displayLayout)
 
 class FourthDisplay(QWidget):

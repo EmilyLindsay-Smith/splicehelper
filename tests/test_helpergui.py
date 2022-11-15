@@ -63,3 +63,35 @@ def test_firstdisplay(qtbot):
 	assert widget.temp_label.text() == "Welcome to the First Display"
 	assert "help you build splice files" in widget.greeting_label.text()
 	assert "if you need to merge" in widget.merge_explanation_label.text()
+
+def test_seconddisplay_instructions(qtbot):
+	widget = SecondDisplay()
+	qtbot.addWidget(widget)
+
+	assert widget.instructions_label.text() == "Let me know the following values so I can merge your files:"
+
+def test_seconddisplay_form(qtbot):
+	widget = SecondDisplay()
+	qtbot.addWidget(widget)
+
+	assert widget.form_layout.rowCount() == 2
+	assert "Main File Row to Merge On:" == widget.entry1_label
+	assert "Merge File Row to Merge On:" == widget.entry2_label
+
+def test_thirddisplay_instructions(qtbot):
+	widget = ThirdDisplay()
+	qtbot.addWidget(widget)
+
+	assert widget.instructions_label.text() == "Let me know the following values so I can build your splice file:"
+
+def test_thirddisplay_form(qtbot):
+	widget = ThirdDisplay()
+	qtbot.addWidget(widget)
+
+	assert widget.form_layout.rowCount() == 6
+	assert "Title:" == widget.entry1_label
+	assert "ISI 1:" == widget.entry2_label
+	assert "ISI 2:" == widget.entry3_label
+	assert "Stimulus Column Name:" == widget.entry4_label
+	assert "Array of Coding Columns:" == widget.entry5_label
+	assert "Output Filename and Path:" == widget.entry6_label
