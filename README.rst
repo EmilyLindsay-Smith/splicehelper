@@ -22,5 +22,7 @@ To Do
 	* add tests for commandline code? 
 	* if working, can try to make the commandline version available on PyPI?
 * Create GUI view
+	* In progress - forms created
+	* Need to sort basic styling
 * Create controller to link model and view
 * Package GUI for installation
