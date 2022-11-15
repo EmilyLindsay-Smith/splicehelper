@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
 		pageLayout.addLayout(self.headingLayout)
 		pageLayout.addLayout(self.stackLayout)
 		pageLayout.addLayout(self.buttonLayout)
+
 		#Define headingLayout Elements
 		self.header_label = QLabel("Welcome to SpliceHelper")
 		self.headingLayout.addWidget(self.header_label)
@@ -35,11 +36,18 @@ class MainWindow(QMainWindow):
 		#Define Rotating views to show on stackedlayout
 		self.page1 = FirstDisplay()
 		self.stackLayout.addWidget(self.page1)
-g
+
+		self.page2 = SecondDisplay()
+		self.stackLayout.addWidget(self.page2)
+
+		self.page3 = ThirdDisplay()
+		self.stackLayout.addWidget(self.page3)
+
 		#Define buttonLayout buttons to display all the time
 		self.btn = QPushButton("Next")
 		self.buttonLayout.addWidget(self.btn)
 		self.btn.pressed.connect(lambda bool=0, index=1:self.__activate_tab(index))
+		
 		#Create Central Widget
 		widget = QWidget()
 		widget.setLayout(pageLayout)
@@ -52,14 +60,45 @@ g
 		else:
 			self.stackLayout.setCurrentIndex(current+1)
 
+
 class FirstDisplay(QWidget):
-	#TODO: Does not stay on screen
+	#TODO: Welcome to SpliceHelper. Import main file & second file if needed
 	def __init__(self):
 		super().__init__()
-	#	displayLayout = QVBoxLayout()
+		displayLayout = QVBoxLayout()
 		self.temp_label = QLabel("Welcome to the First Display")
-	#	displayLayout.add(self.temp_label)
-	#	self.setLayout(displayLayout)
+		displayLayout.addWidget(self.temp_label)
+		self.setLayout(displayLayout)
+
+
+class SecondDisplay(QWidget):
+	#TODO: Merge files if needed
+	def __init__(self):
+		super().__init__()
+		displayLayout = QVBoxLayout()
+		self.temp_label = QLabel("Welcome to the Second Display")
+		displayLayout.addWidget(self.temp_label)
+		self.setLayout(displayLayout)
+
+
+class ThirdDisplay(QWidget):
+	#TODO: Get ISIs, CodeArray COlumns, Listname, title, filename
+	def __init__(self):
+		super().__init__()
+		displayLayout = QVBoxLayout()
+		self.temp_label = QLabel("Welcome to the Third Display")
+		displayLayout.addWidget(self.temp_label)
+		self.setLayout(displayLayout)
+
+class FourthDisplay(QWidget):
+	#TODO: Announce file is ready, give option to start again from various stages or finish.
+	def __init__(self):
+		super().__init__()
+		displayLayout = QVBoxLayout()
+		self.temp_label = QLabel("Welcome to the Fourth Display")
+		displayLayout.addWidget(self.temp_label)
+		self.setLayout(displayLayout)
+
 
 if __name__=="__main__":
 	app = QApplication([])

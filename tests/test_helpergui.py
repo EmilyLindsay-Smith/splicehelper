@@ -25,31 +25,39 @@ def test_nextbutton(qtbot):
 	assert widget.btn.text() == 'Next'
 
 def test_nextbutton_function(qtbot):
-	#Note this displays index of stack layout, not checking content shown
 	widget = MainWindow()
 	qtbot.addWidget(widget)
-	currentIndex = widget.stackLayout.currentIndex()
-
-	qtbot.mouseClick(widget.btn, qt_api.QtCore.Qt.MouseButton.LeftButton)
-
-	newIndex = widget.stackLayout.currentIndex()
+	
 	totalViews = widget.stackLayout.count()
-	if totalViews == 0:
-		assert newIndex == -1
-	elif totalViews != 0 and currentIndex != totalViews -1:
-		assert currentIndex == newIndex + 1
-	elif totalViews !=0:
-		assert newIndex == 0
+
+	def assertions():
+		currentIndex = widget.stackLayout.currentIndex()
+		qtbot.mouseClick(widget.btn, qt_api.QtCore.Qt.MouseButton.LeftButton)
+		newIndex = widget.stackLayout.currentIndex()
+		if totalViews == 0:
+			assert newIndex == -1
+		elif totalViews != 0 and currentIndex != totalViews -1:
+			assert currentIndex == newIndex - 1
+		elif totalViews !=0:
+			assert newIndex == 0
+
+	def checkcontent():
+		newIndex = widget.stackLayout.currentIndex()
+		if newIndex == 0:
+			assert widget.page1.temp_label.text() == "Welcome to the First Display"
+		elif newIndex == 1:
+			assert widget.page2.temp_label.text() == "Welcome to the Second Display"
+		elif newIndex == 2:
+			assert widget.page3.temp_label.text() == "Welcome to the Third Display"
+		elif newIndex == 3:
+			assert widget.page4.temp_label.text() == "Welcome to the Fourth Display"
+
+	for i in range(0, totalViews):
+		assertions()
+		checkcontent()
 
 def test_firstdisplay(qtbot):
 	widget = FirstDisplay()
 	qtbot.addWidget(widget)
 
 	assert widget.temp_label.text() == "Welcome to the First Display"
-
-def test_firstdisplay_inmain(qtbot):
-	widget = MainWindow()
-	qtbot.addWidget(widget)
-
-	labeltext = widget.page1.temp_label.text()
-	assert labeltext == "Welcome to the First Display"
