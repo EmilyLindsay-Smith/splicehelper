@@ -1,4 +1,5 @@
 import sys
+import re
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import(
@@ -10,8 +11,10 @@ from PyQt6.QtWidgets import(
 	QVBoxLayout,
 	QHBoxLayout,
 	QStackedLayout,
+	QFormLayout,
 	QWidget,
-	QLabel
+	QLabel,
+	QLineEdit
 )
 
 class MainWindow(QMainWindow):
@@ -72,9 +75,46 @@ class FirstDisplay(QWidget):
 		# TextBox to give file name - consider validation?
 	def __init__(self):
 		super().__init__()
+		#Define Display
 		displayLayout = QVBoxLayout()
+
+		#Define Content and add to displayLayout
 		self.temp_label = QLabel("Welcome to the First Display")
 		displayLayout.addWidget(self.temp_label)
+
+		
+		greeting_label_text = """Welcome to SpliceHelper. My job is to help you build splice files \
+			for use in splice.pl at the Language and Brain Lab, Oxford University.
+			To get started, let me know what file you'd like to build from. \
+			I can handle the following file formats:
+			.csv, .xls, .xlsx, .xlsm, .xlsb, .odf, .ods, .odt
+			(But I do assume you're using Sheet 1 of Excel.) """
+
+		greeting_label_text = re.sub(r'\t', '', greeting_label_text)
+		self.greeting_label=QLabel(greeting_label_text)	
+		self.greeting_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+		displayLayout.addWidget(self.greeting_label)
+
+		self.main_file_input = QLineEdit(
+			self,
+			placeholderText='Main Stimulus File Path',
+			clearButtonEnabled=True)
+		displayLayout.addWidget(self.main_file_input)
+
+		merge_explanation_text = """If all your stimuli and data are in that file, great! Press Next.\n\n
+		However, if you need to merge the above file with another one, let me know the file here:"""
+		merge_explanation_text = re.sub(r'\t', '', 	merge_explanation_text)
+		self.merge_explanation_label=QLabel(merge_explanation_text)	
+		self.merge_explanation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+		displayLayout.addWidget(self.merge_explanation_label)
+
+		self.merge_file_input = QLineEdit(
+			self,
+			placeholderText='Merge File Path',
+			clearButtonEnabled=True
+			)
+		displayLayout.addWidget(self.merge_file_input)
+		#Set Layout
 		self.setLayout(displayLayout)
 
 

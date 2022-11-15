@@ -61,3 +61,5 @@ def test_firstdisplay(qtbot):
 	qtbot.addWidget(widget)
 
 	assert widget.temp_label.text() == "Welcome to the First Display"
+	assert "help you build splice files" in widget.greeting_label.text()
+	assert "if you need to merge" in widget.merge_explanation_label.text()
