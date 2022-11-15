@@ -36,8 +36,20 @@ def test_nextbutton_function(qtbot):
 	totalViews = widget.stackLayout.count()
 	if totalViews == 0:
 		assert newIndex == -1
-	elif totalViews != 0 and currentIndex != totalViews:
+	elif totalViews != 0 and currentIndex != totalViews -1:
 		assert currentIndex == newIndex + 1
 	elif totalViews !=0:
 		assert newIndex == 0
 
+def test_firstdisplay(qtbot):
+	widget = FirstDisplay()
+	qtbot.addWidget(widget)
+
+	assert widget.temp_label.text() == "Welcome to the First Display"
+
+def test_firstdisplay_inmain(qtbot):
+	widget = MainWindow()
+	qtbot.addWidget(widget)
+
+	labeltext = widget.page1.temp_label.text()
+	assert labeltext == "Welcome to the First Display"
