@@ -1,5 +1,5 @@
 pytest==7.2.0
-pytest-qt==4.2.0pip sho
+pytest-qt==4.2.0
 pandas==1.4.2
 PyQt6==6.4.0
 re
