@@ -1,8 +1,19 @@
 # This is the MODEL code for the SpliceHelper Project
 # Think about checking for errors/problems etc
-#Does not handle GAP rows to add breaks in 
+#Does not handle GAP rows to add breaks in
+#"" TO DO ISSUES:
+#	- How to handle GAP / other signifiers for breaks
+#		- both for add_wav_to_stimuli
+#		- and for getting correct break output later
+#	- Check if file exists and if not try again for create_df_from_input - decide where this goes, maybe in wrapper?
+#	- Refactor commandline code into separate file that imports these main functions
+#		- add tests for commandline code?
+##		- if working, can try to make the commandline version available on PyPI?
+##	- Create GUI view
+#	- Create controller to link model and view
 
-#Import Packages
+
+# Import Packages
 import pandas as pd
 import re
 import os
@@ -10,8 +21,8 @@ import os
 #Create df from csv or excel input
 def create_df_from_input(filename):
 	#TODO: check if file exists, and if not raise error
-	file_extension = filename.split('.')[-1] 
-	excel_extensions = ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt'] 
+	file_extension = filename.split('.')[-1]
+	excel_extensions = ['xls', 'xlsx', 'xlsm', 'xlsb', 'odf', 'ods', 'odt']
 	#To Resolve these paths:
 	##Excel: openpyxl
 	##ODS: odfpy
@@ -30,6 +41,7 @@ def create_df_from_input(filename):
 	return df
 
 #Merge with another CSV file
+
 def merge_df_with_another(main_df, other_df, merge_on_main_df, merge_on_other_df='', how='left'):
 	try:
 		if merge_on_other_df == '':
@@ -52,7 +64,7 @@ def create_df_with_splice_columns(df, isi1, isi2):
 	df['Bleep2'] = Bleep2.upper()
 	df['Dummy'] = 0
 	return df
-	
+
 
 #Identify Columns to include in the output
 def create_subset_df_for_list(df, listname, coding_array):
@@ -71,7 +83,7 @@ def create_subset_df_for_list(df, listname, coding_array):
 
 	myArray.append('Dummy')
 	df = df[myArray]
-	return df 
+	return df
 
 #Add .wav to Stimuli List
 def add_wav_to_stimuli(df, listname):
