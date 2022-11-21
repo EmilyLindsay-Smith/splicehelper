@@ -1,7 +1,7 @@
 # This is the MODEL code for the SpliceHelper Project
 # Think about checking for errors/problems etc
 
-#For ToDos see Github Issues - assorted exist
+#For ToDos see Github Issues - assorted exist there
 
 # Import Packages
 import pandas as pd
