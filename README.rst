@@ -13,6 +13,8 @@ A command line tool broadly works but needs refactoring and testing
 
 Features
 ======
+GUI
+Accepts a range of spreadsheet inputs
 
 Notes
 ======
