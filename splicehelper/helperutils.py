@@ -1,17 +1,7 @@
 # This is the MODEL code for the SpliceHelper Project
 # Think about checking for errors/problems etc
-#Does not handle GAP rows to add breaks in
-#"" TO DO ISSUES:
-#	- How to handle GAP / other signifiers for breaks
-#		- both for add_wav_to_stimuli
-#		- and for getting correct break output later
-#	- Check if file exists and if not try again for create_df_from_input - decide where this goes, maybe in wrapper?
-#	- Refactor commandline code into separate file that imports these main functions
-#		- add tests for commandline code?
-##		- if working, can try to make the commandline version available on PyPI?
-##	- Create GUI view
-#	- Create controller to link model and view
 
+#For ToDos see Github Issues - assorted exist
 
 # Import Packages
 import pandas as pd
