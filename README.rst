@@ -14,7 +14,7 @@ A command line tool broadly works but needs refactoring and testing
 Features
 ======
 GUI
-Accepts a range of spreadsheet inputs
+Accepts a range of spreadsheet inputs including csv and different ExCEl formats
 
 Notes
 ======
