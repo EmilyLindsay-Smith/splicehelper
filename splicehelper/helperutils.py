@@ -44,14 +44,21 @@ def merge_df_with_another(main_df, other_df, merge_on_main_df, merge_on_other_df
 	return df
 
 #Merge in splice specific columns - incl specify ISI
-def create_df_with_splice_columns(df, isi1, isi2):
+def create_df_with_splice_columns(df, isi1, isi2, isi3 = '', stringColumn = ''):
 	#Define Splice Specific Columns
 
-	Bleep1 = f'bleep; pause, {isi1};'
-	Bleep2 = f'pulse; pause, {isi2}; code, '
+	Bleep1 = f'BLEEP; PAUSE, {isi1};'
+	Bleep3 = f'; PAUSE, {isi2}; CODE, '
+
+	if stringColumn == '':
+		Bleep2 = '; PULSE;'
+	else:
+		#Need to check if this works?
+		Bleep2 = f'; PULSE; STR, {stringColumn}, {isi3}'
 	#Add Them In 
-	df['! Bleep1'] = Bleep1.upper()
-	df['Bleep2'] = Bleep2.upper()
+	df['! Bleep1'] = Bleep1
+	df['Bleep3'] = Bleep3
+	df['Bleep2'] = Bleep2
 	df['Dummy'] = 0
 	return df
 
