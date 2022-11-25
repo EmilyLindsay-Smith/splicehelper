@@ -23,25 +23,30 @@ data2 = {'! Bleep1': ['BLEEP; PAUSE, 500;',
 	}
 df2 = pd.DataFrame(data2)
 
-def create_subset_df_for_list(df, listname, coding_array):
-	if listname in df.columns:
-		myArray = ['! Bleep1']
-		myArray.append(listname)
-		myArray.append('Bleep2')
+colname = "Other"
+df2['VisualStimuli'] = [', '.join(i) for i in zip(df2["Code"],df2["Other"])]
+
+isi3= 500
+df2['VisualStimuli2'] =Bleep2 = [f" PULSE; STR, {i}, {isi3}" for i in df2[colname]]
+
+def create_df_with_splice_columns(df, isi1, isi2, isi3 = '', stringColumn = ''):
+	#Define Splice Line Start
+
+	Bleep1 = f'BLEEP; PAUSE, {isi1};'
+	df['! Bleep1'] = Bleep1
+
+	# Define splice string whether visual stimuli present or not
+	if stringColumn == '':
+		df['Bleep2'] = ' PULSE'
 	else:
-		raise Exception(f'Stimuli Listname {listname} given to create subset is not present in data')
+		stringColumn = stringColumn
+		df['Bleep2'] = [f" PULSE; STR, {i}, {isi3}" for i in df[stringColumn]]
+	
+	# Define final splice code 
+	Bleep3 = f'; PAUSE, {isi2}; CODE, '
+	df['Bleep3'] = Bleep3
+	df['Dummy'] = 0
+	return df
 
-	for item in coding_array:
-		if item in df.columns:
-			myArray.append(item)
-		else:
-			raise Exception(f'Coding column {item} not present in data')
-
-	myArray.append('Dummy')
-	print(myArray)
-	df = df[myArray]
-	return df 
-
-testdf = create_subset_df_for_list(df1, 'List', ['Code', 'Other', 'Baggins'])
-print(testdf)
-
+df3 = create_df_with_splice_columns(df2, 300, 500, 400, 'Other')
+print(df3)
