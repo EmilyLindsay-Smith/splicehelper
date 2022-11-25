@@ -45,32 +45,34 @@ def merge_df_with_another(main_df, other_df, merge_on_main_df, merge_on_other_df
 
 #Merge in splice specific columns - incl specify ISI
 def create_df_with_splice_columns(df, isi1, isi2, isi3 = '', stringColumn = ''):
-	#Define Splice Specific Columns
+	#Define Splice Line Start
 
 	Bleep1 = f'BLEEP; PAUSE, {isi1};'
-	Bleep3 = f'; PAUSE, {isi2}; CODE, '
-
-	if stringColumn == '':
-		Bleep2 = '; PULSE;'
-	else:
-		#Need to check if this works?
-		Bleep2 = f'; PULSE; STR, {stringColumn}, {isi3}'
-	#Add Them In 
 	df['! Bleep1'] = Bleep1
+
+	# Define splice string whether visual stimuli present or not
+	if stringColumn == '':
+		df['Bleep2'] = ' PULSE'
+	else:
+		stringColumn = stringColumn
+		df['Bleep2'] = [f" PULSE; STR, {i}, {isi3}" for i in df[stringColumn]]
+	
+	# Define final splice code 
+	Bleep3 = f'; PAUSE, {isi2}; CODE, '
 	df['Bleep3'] = Bleep3
-	df['Bleep2'] = Bleep2
 	df['Dummy'] = 0
 	return df
 
 
 #Identify Columns to include in the output
-def create_subset_df_for_list(df, listname, coding_array):
-	if listname in df.columns:
+def create_subset_df_for_list(df, soundfile, coding_array):
+	if soundfile in df.columns:
 		myArray = ['! Bleep1']
-		myArray.append(listname)
+		myArray.append(soundfile)
 		myArray.append('Bleep2')
+		myArray.append('Bleep3')
 	else:
-		raise Exception(f'Stimuli Listname {listname} given to create subset is not present in data')
+		raise Exception(f'Sound file column name {soundfile} given to create subset is not present in data')
 
 	for item in coding_array:
 		if item in df.columns:
@@ -83,10 +85,10 @@ def create_subset_df_for_list(df, listname, coding_array):
 	return df
 
 #Add .wav to Stimuli List
-def add_wav_to_stimuli(df, listname):
+def add_wav_to_stimuli(df, soundfile):
 	#Assumes every row has content -can't handle gap rows
 	try:
-		df[listname] = [x + '.wav' if '.wav' not in x else x for x in df[listname]]
+		df[soundfile] = [x + '.wav' if '.wav' not in x else x for x in df[soundfile]]
 		return df
 	except Exception as e:
 		print(e)
@@ -146,7 +148,7 @@ def print_file(df, splice_header, outputfilename, title):
 def get_column_names(df):
 	return list(df.columns)
 
-def run_splice_helper(input_file, listname, coding_array, isi1, isi2, outputfilename, title, input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
+def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
 	try: 
 		print('Running the helper:')
 		df = create_df_from_input(input_file)
@@ -161,9 +163,9 @@ def run_splice_helper(input_file, listname, coding_array, isi1, isi2, outputfile
 		print('Add Splice:')
 		df = create_df_with_splice_columns(df, isi1, isi2)
 		print('Subsetting:')
-		df = create_subset_df_for_list(df, listname, coding_array)
+		df = create_subset_df_for_list(df, soundfile, coding_array)
 		print('Adding Waves')
-		df = add_wav_to_stimuli(df, listname)
+		df = add_wav_to_stimuli(df, soundfile)
 		print('Creating OUtput Files:')
 		splice_header = configure_splice_header(coding_array)
 		print_file(df, splice_header, outputfilename, title)
