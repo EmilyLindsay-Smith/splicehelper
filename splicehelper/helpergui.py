@@ -19,6 +19,8 @@ from PyQt6.QtWidgets import(
 	QFileDialog
 )
 
+from helperutils import run_splice_helper
+
 class MainWindow(QMainWindow):
 	def __init__(self):
 		super().__init__()
@@ -59,7 +61,11 @@ class MainWindow(QMainWindow):
 		self.buttonLayout.addWidget(self.btn)
 		self.btn.pressed.connect(lambda bool=0, index=1:self.__activate_tab(index))
 		
-		#Create Central Widget
+
+		self.finishedbtn = QPushButton("Done")
+		self.buttonLayout.addWidget(self.finishedbtn)
+	
+			#Create Central Widget
 		widget = QWidget()
 		widget.setLayout(pageLayout)
 		self.setCentralWidget(widget)
@@ -103,11 +109,12 @@ class FirstDisplay(QWidget):
 
 		self.main_file_input_label = QLabel("What is your main stimulus file?")
 		self.file_input_button = QPushButton("Select File")
-		self.file_input_button.pressed.connect(self.__selectFile)
+		self.file_input_button.pressed.connect(lambda type='main':self.__selectFile(type))
 		layout_form1 = QFormLayout()
-		layout_form1.addRow(self.main_file_input_label, self.file_input_button)
+		layout_form1.addRow(self.main_file_input_label, self.file_input_button)		
+		self.textlabel = QLabel("")
+		layout_form1.addWidget(self.textlabel)
 		displayLayout.addLayout(layout_form1)
-
 
 		merge_explanation_text = "If all your stimuli and data are in that file, great! Press Next.\n\n"
 		merge_explanation_text += "However, if you need to merge the above file with another one, let me know the file here:"""
@@ -118,20 +125,26 @@ class FirstDisplay(QWidget):
 
 		self.merge_file_input_label = QLabel("What is your secondary stimulus file?")
 		self.mergefile_input_button = QPushButton("Select File")
-		self.mergefile_input_button.pressed.connect(self.__selectFile)
+		self.mergefile_input_button.pressed.connect(lambda type='merge':self.__selectFile(type))
 		layout_form2 = QFormLayout()
 		layout_form2.addRow(self.merge_file_input_label, self.mergefile_input_button)
+		self.textlabel2 = QLabel("")
+		layout_form2.addWidget(self.textlabel2)
 		displayLayout.addLayout(layout_form2)
 		#Set Layout
 		self.setLayout(displayLayout)
 
-	def __selectFile(self):
+	def __selectFile(self, type):
 		home_dir = str(Path.home())
 		fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)
 		if fname[0]:
-			f = open(fname[0], 'r')
-			with f:
-				data = f.read()
+			if type == 'main':
+				self.textlabel.setText(fname[0])
+			else:
+				self.textlabel2.setText(fname[0])
+			#f = open(fname[0], 'r')
+			#with f:
+			#	data = f.read()
 
 
 
@@ -163,6 +176,7 @@ class SecondDisplay(QWidget):
 
 		displayLayout.addWidget(self.merge_details)
 		self.setLayout(displayLayout)
+
 class ThirdDisplay(QWidget):
 	#TODO: Get ISIs, CodeArray COlumns, Listname, title, filename
 		# Show snippet of dataframe in use
@@ -234,16 +248,60 @@ class FourthDisplay(QWidget):
 		displayLayout = QVBoxLayout()
 		self.temp_label = QLabel("Welcome to the Fourth Display")
 		displayLayout.addWidget(self.temp_label)
+		
+
 		self.setLayout(displayLayout)
 
 
+def __runme(*args):
+	run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, stringColumn = '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df='')
+ 
+class SpliceHelper:
+	def __init__(self, model, view):
+		self.__view = view
+		self.__model = model
+		self.__connectSignalsAndSlots()
+
+		self.input_file= self.__view.page1.textlabel.text()
+		self.soundfile= ''
+		self.coding_array= ''
+		self.isi1= ''
+		self.isi2= ''
+		self.outputfilename= ''
+		self.title= ''
+		self.stringColumn= ''
+		self.isi3= ''
+		self.input_file2= ''
+		self.merge_on_main_df= ''
+		self.merge_on_other_df= ''
+
+	def __connectSignalsAndSlots(self):
+		self.__view.finishedbtn.clicked.connect(self.__printMe)
+		print('Howdy')
+
+	def __printMe(self):
+		print("Yoda")
+		"""print(self.input_file, 
+			self.soundfile,
+			self.coding_array,
+			self.isi1,
+			self.isi2,
+			self.outputfilename,
+			self.title,
+			self.stringColumn,
+			self.isi3,
+			self.input_file2,
+			self.merge_on_main_df,
+			self.merge_on_other_df,
+		)"""
+		
 if __name__=="__main__":
 	app = QApplication([])
 	window = MainWindow()
 	window.setStyleSheet("""
 		QLabel  {padding-bottom: 3px}
 		""")
-
+	SpliceHelper(model = __runme, view = window)
 
 	window.show()
 	sys.exit(app.exec())

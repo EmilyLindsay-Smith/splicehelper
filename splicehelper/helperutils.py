@@ -148,7 +148,7 @@ def print_file(df, splice_header, outputfilename, title):
 def get_column_names(df):
 	return list(df.columns)
 
-def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
+def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, stringColumn= '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
 	try: 
 		print('Running the helper:')
 		df = create_df_from_input(input_file)
