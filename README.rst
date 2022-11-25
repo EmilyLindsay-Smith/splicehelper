@@ -15,7 +15,3 @@ Features
 ======
 GUI
 Accepts a range of spreadsheet inputs including csv and different ExCEl formats
-
-Notes
-======
-The main branch of this repository has been protected. Pull requests can be merged if they pass status checks
