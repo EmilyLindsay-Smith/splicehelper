@@ -1,5 +1,6 @@
 import sys
 import re
+from pathlib import Path
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import(
@@ -14,13 +15,16 @@ from PyQt6.QtWidgets import(
 	QFormLayout,
 	QWidget,
 	QLabel,
-	QLineEdit
+	QLineEdit,
+	QFileDialog
 )
 
 class MainWindow(QMainWindow):
 	def __init__(self):
 		super().__init__()
 		self.setWindowTitle("SpliceHelper")
+		self.setGeometry(300, 200, 700, 700)
+		self.setFixedSize(700,700)
 
 		#Define Layouts and add them together
 		pageLayout = QVBoxLayout()
@@ -34,6 +38,8 @@ class MainWindow(QMainWindow):
 
 		#Define headingLayout Elements
 		self.header_label = QLabel("Welcome to SpliceHelper")
+		self.header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+		self.header_label.setStyleSheet("font-weight: bold")
 		self.headingLayout.addWidget(self.header_label)
 
 		#Define Rotating views to show on stackedlayout
@@ -78,44 +84,55 @@ class FirstDisplay(QWidget):
 		#Define Display
 		displayLayout = QVBoxLayout()
 
+		greetingLayout = QHBoxLayout()
+		textLayout = QHBoxLayout()
 		#Define Content and add to displayLayout
-		self.temp_label = QLabel("Welcome to the First Display")
-		displayLayout.addWidget(self.temp_label)
-
 		
-		greeting_label_text = """Welcome to SpliceHelper. My job is to help you build splice files \
-			for use in splice.pl at the Language and Brain Lab, Oxford University.
-			To get started, let me know what file you'd like to build from. \
-			I can handle the following file formats:
-			.csv, .xls, .xlsx, .xlsm, .xlsb, .odf, .ods, .odt
-			(But I do assume you're using Sheet 1 of Excel.) """
+		greeting_label_text = "Let me help you build splice files"
+		greeting_label_text += " for use in splice.pl at the Language and Brain Lab, Oxford University.\n"
+		greeting_label_text += "To get started, let me know what file you'd like to build from.\n"
+		greeting_label_text += "I can handle the following file formats:\n"
+		greeting_label_text += ".csv, .xls, .xlsx, .xlsm, .xlsb, .odf, .ods, .odt\n"
+		greeting_label_text += "(But I do assume you're using Sheet 1 of Excel.) "
 
-		greeting_label_text = re.sub(r'\t', '', greeting_label_text)
 		self.greeting_label=QLabel(greeting_label_text)	
+		greetingLayout.addWidget(self.greeting_label)
 		self.greeting_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-		displayLayout.addWidget(self.greeting_label)
+		displayLayout.addLayout(greetingLayout)
+		
 
-		self.main_file_input = QLineEdit(
-			self,
-			placeholderText='Main Stimulus File Path',
-			clearButtonEnabled=True)
-		displayLayout.addWidget(self.main_file_input)
+		self.main_file_input_label = QLabel("What is your main stimulus file?")
+		self.file_input_button = QPushButton("Select File")
+		self.file_input_button.pressed.connect(self.__selectFile)
+		layout_form1 = QFormLayout()
+		layout_form1.addRow(self.main_file_input_label, self.file_input_button)
+		displayLayout.addLayout(layout_form1)
 
-		merge_explanation_text = """If all your stimuli and data are in that file, great! Press Next.\n\n
-		However, if you need to merge the above file with another one, let me know the file here:"""
-		merge_explanation_text = re.sub(r'\t', '', 	merge_explanation_text)
+
+		merge_explanation_text = "If all your stimuli and data are in that file, great! Press Next.\n\n"
+		merge_explanation_text += "However, if you need to merge the above file with another one, let me know the file here:"""
 		self.merge_explanation_label=QLabel(merge_explanation_text)	
 		self.merge_explanation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-		displayLayout.addWidget(self.merge_explanation_label)
+		textLayout.addWidget(self.merge_explanation_label)
+		displayLayout.addLayout(textLayout)
 
-		self.merge_file_input = QLineEdit(
-			self,
-			placeholderText='Merge File Path',
-			clearButtonEnabled=True
-			)
-		displayLayout.addWidget(self.merge_file_input)
+		self.merge_file_input_label = QLabel("What is your secondary stimulus file?")
+		self.mergefile_input_button = QPushButton("Select File")
+		self.mergefile_input_button.pressed.connect(self.__selectFile)
+		layout_form2 = QFormLayout()
+		layout_form2.addRow(self.merge_file_input_label, self.mergefile_input_button)
+		displayLayout.addLayout(layout_form2)
 		#Set Layout
 		self.setLayout(displayLayout)
+
+	def __selectFile(self):
+		home_dir = str(Path.home())
+		fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)
+		if fname[0]:
+			f = open(fname[0], 'r')
+			with f:
+				data = f.read()
+
 
 
 class SecondDisplay(QWidget):
@@ -153,15 +170,16 @@ class ThirdDisplay(QWidget):
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
+		textLayout = QHBoxLayout()
 		self.temp_label = QLabel("Welcome to the Third Display")
 		displayLayout.addWidget(self.temp_label)
 		
 		self.instructions_label = QLabel("Let me know the following values so I can build your splice file:")
-		displayLayout.addWidget(self.instructions_label)
+		textLayout.addWidget(self.instructions_label)
+		displayLayout.addLayout(textLayout)
 
 		self.specific_details=QWidget(self)
 		self.form_layout = QFormLayout()
-		self.specific_details.setLayout(self.form_layout)
 
 		self.entry1 = QLineEdit(self.specific_details, placeholderText='title', clearButtonEnabled=True)
 		self.entry1_label = 'Title:'
@@ -174,23 +192,36 @@ class ThirdDisplay(QWidget):
 		self.entry3 = QLineEdit(self.specific_details, placeholderText='ISI', clearButtonEnabled=True)
 		self.entry3_label = 'ISI 2:'
 		self.form_layout.addRow(self.entry3_label, self.entry3)
-		displayLayout.addWidget(self.specific_details)
+
+
+		self.entry7 = QLineEdit(self.specific_details, placeholderText='ISI', clearButtonEnabled=True)
+		self.entry7_label = 'ISI 3:'
+		self.form_layout.addRow(self.entry7_label, self.entry7)
+	
 
 		self.entry4 = QLineEdit(self.specific_details, placeholderText='Column Name', clearButtonEnabled=True)
-		self.entry4_label = 'Stimulus Column Name:'
+		self.entry4_label = 'Auditory Stimuli Column Name:'
 		self.form_layout.addRow(self.entry4_label, self.entry4)
-		displayLayout.addWidget(self.specific_details)
+		
+
+		self.entry8 = QLineEdit(self.specific_details, placeholderText='Column Name', clearButtonEnabled=True)
+		self.entry8_label = 'Visual Stimuli Column Name:'
+		self.form_layout.addRow(self.entry8_label, self.entry8)
+		
 
 		self.entry5 = QLineEdit(self.specific_details, placeholderText="['Column1', 'Column2']", clearButtonEnabled=True)
 		self.entry5_label = 'Array of Coding Columns:'
 		self.form_layout.addRow(self.entry5_label, self.entry5)
-		displayLayout.addWidget(self.specific_details)
+		
 
 		self.entry6 = QLineEdit(self.specific_details, placeholderText="path/to/filename_without_extension", clearButtonEnabled=True)
 		self.entry6_label = 'Output Filename and Path:'
 		self.form_layout.addRow(self.entry6_label, self.entry6)
 
 		displayLayout.addWidget(self.specific_details)
+		self.specific_details.setLayout(self.form_layout)
+		displayLayout.addWidget(self.specific_details)
+
 		self.setLayout(displayLayout)
 
 class FourthDisplay(QWidget):
@@ -209,5 +240,10 @@ class FourthDisplay(QWidget):
 if __name__=="__main__":
 	app = QApplication([])
 	window = MainWindow()
+	window.setStyleSheet("""
+		QLabel  {padding-bottom: 3px}
+		""")
+
+
 	window.show()
 	sys.exit(app.exec())
