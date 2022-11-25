@@ -1,4 +1,6 @@
+
 from splicehelper.helperutils import *
+
 ###CommandLineFunctions####
 def get_mainfile(main_or_second):
 	def request_file(main_or_second):
@@ -42,6 +44,7 @@ def merge_files(df):
 		return df	
 
 def get_specifics(df):
+
 	isi1 = input('What is your first interstimulus interval?\n ISI: ')
 	isi2 = input('What is your final interstimulus interval?\n ISI: ')
 	isi3 = input('What is your post-visual-stimuli interstimulus interval? If none press enter\n ISI:')
@@ -50,6 +53,7 @@ def get_specifics(df):
 	print(get_column_names(df))
 	soundfile = input('What is the column name for your auditory stimulus list? If none press enter \n')
 	stringColumn = input('What is the column name for your visual stimulus list? If none press enter\n')
+
 
 	def get_codearray(codearray, df):
 		codearray = codearray
@@ -73,9 +77,11 @@ def get_specifics(df):
 		codearray = get_codearray(codearray, df)
 			
 	print('Creating your splice file...')
+
 	df = create_df_with_splice_columns(df, isi1, isi2, isi3, stringColumn)
 	df = create_subset_df_for_list(df, soundfile, codearray)
 	df = add_wav_to_stimuli(df, soundfile)
+
 	splice_header = configure_splice_header(codearray)
 	return df , splice_header
 
