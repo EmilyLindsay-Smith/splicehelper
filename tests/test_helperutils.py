@@ -24,10 +24,18 @@ def test_merge_df_with_another_samecol(sample_df, sample_df3, sample_df_merged):
 
 def test_create_df_with_splice_columns(sample_df, sample_df_spliced):
 	testdf = create_df_with_splice_columns(sample_df, 500, 1000)
+	print(testdf['! Bleep1'], testdf['Bleep2'], testdf['Bleep3'])
+	print(sample_df_spliced['! Bleep1'], sample_df_spliced['Bleep2'], sample_df_spliced['Bleep3'])
 	pd.testing.assert_frame_equal(testdf, sample_df_spliced)
+
+def test_create_df_with_splice_columns_visual(sample_df, sample_df_spliced_vis):
+	testdf = create_df_with_splice_columns(sample_df, 500, 1000,300, 'Other')
+	pd.testing.assert_frame_equal(testdf, sample_df_spliced_vis)
 
 def test_create_subset_df_for_list(sample_df_spliced, sample_df_spliced_subset):
 	testdf = create_subset_df_for_list(sample_df_spliced, 'List', ['Code', 'Other'])
+	print(testdf)
+	print(sample_df_spliced_subset)
 	pd.testing.assert_frame_equal(testdf, sample_df_spliced_subset)
 
 def test_add_wav_to_stimuli(sample_df_spliced, sample_df_waved):
@@ -99,7 +107,24 @@ def sample_df_spliced():
 			'! Bleep1': ['BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;'],
-			'Bleep2': ['PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, '],
+			'Bleep2': [' PULSE',' PULSE',' PULSE'],
+			'Bleep3': ['; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, '],
+			'Dummy': [0,0,0]
+	}
+	df = pd.DataFrame(data)
+	return df
+
+@pytest.fixture 
+def sample_df_spliced_vis():
+	data = {'List': ['Banana', 'Cherry', 'Kiwi'],
+			'Code': ['Prime', 'Target', 'Filler'],
+			'Freq': [102, 5099, 3],
+			'Other': ['Pretty', 'Little', 'Fish'],
+			'! Bleep1': ['BLEEP; PAUSE, 500;',
+						'BLEEP; PAUSE, 500;',
+						'BLEEP; PAUSE, 500;'],
+			'Bleep2': [' PULSE; STR, Pretty, 300',' PULSE; STR, Little, 300',' PULSE; STR, Fish, 300'],
+			'Bleep3': ['; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, '],
 			'Dummy': [0,0,0]
 	}
 	df = pd.DataFrame(data)
@@ -111,7 +136,8 @@ def sample_df_spliced_subset():
 						'BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;'],
 			'List': ['Banana', 'Cherry', 'Kiwi'],
-			'Bleep2': ['PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, '],
+			'Bleep2': [' PULSE',' PULSE',' PULSE'],
+			'Bleep3': ['; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, '],
 			'Code': ['Prime', 'Target', 'Filler'],
 			'Other': ['Pretty', 'Little', 'Fish'],
 						'Dummy': [0,0,0]
@@ -128,7 +154,8 @@ def sample_df_waved():
 			'! Bleep1': ['BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;'],
-			'Bleep2': ['PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, '],
+			'Bleep2':	[' PULSE',' PULSE',' PULSE'],
+			'Bleep3': ['; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, '],
 			'Dummy': [0,0,0]
 	}
 	df = pd.DataFrame(data)
@@ -143,7 +170,8 @@ def sample_df_spliced_2():
 			'! Bleep1': ['BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;',
 						'BLEEP; PAUSE, 500;'],
-			'Bleep2': ['PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, ','PULSE; PAUSE, 1000; CODE, '],
+			'Bleep2': [' PULSE',' PULSE',' PULSE'],
+			'Bleep3': ['; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, ','; PAUSE, 1000; CODE, '],
 			'Dummy': [0,0,0]
 	}
 	df = pd.DataFrame(data)
