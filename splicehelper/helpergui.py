@@ -97,9 +97,9 @@ class FirstDisplay(QWidget):
 		#Define Content and add to displayLayout
 		
 		greeting_label_text = "Let me help you build splice files"
-		greeting_label_text += " for use in splice.pl at the Language and Brain Lab, Oxford University.\n"
+		greeting_label_text += " for use in splice.pl at the Language and Brain Lab, Oxford University.\n\n"
 		greeting_label_text += "To get started, let me know what file you'd like to build from.\n"
-		greeting_label_text += "I can handle the following file formats:\n"
+		greeting_label_text += "I can handle the following file formats:  "
 		greeting_label_text += ".csv, .xls, .xlsx, .xlsm, .xlsb, .odf, .ods, .odt\n"
 		greeting_label_text += "(But I do assume you're using Sheet 1 of Excel.) "
 
@@ -115,6 +115,7 @@ class FirstDisplay(QWidget):
 		layout_form1 = QFormLayout()
 		layout_form1.addRow(self.main_file_input_label, self.file_input_button)		
 		self.textlabel = QLabel("")
+		self.textlabel.setWordWrap(True)
 		layout_form1.addWidget(self.textlabel)
 		displayLayout.addLayout(layout_form1)
 
@@ -138,6 +139,7 @@ class FirstDisplay(QWidget):
 		layout_form2 = QFormLayout()
 		layout_form2.addRow(self.merge_file_input_label, self.mergefile_input_button)
 		self.textlabel2 = QLabel("")
+		self.textlabel2.setWordWrap(True)
 		layout_form2.addWidget(self.textlabel2)
 		displayLayout.addLayout(layout_form2)
 
@@ -201,15 +203,15 @@ class ThirdDisplay(QWidget):
 		super().__init__()
 		displayLayout = QVBoxLayout()
 		textLayout = QHBoxLayout()
-		self.temp_label = QLabel("Welcome to the Third Display")
+		self.temp_label = QLabel("Here is your current data source - go back to make changes if it's not right")
 		displayLayout.addWidget(self.temp_label)
 		
+		self.table = QTableView()
+		displayLayout.addWidget(self.table)
+
 		self.instructions_label = QLabel("Let me know the following values so I can build your splice file:")
 		textLayout.addWidget(self.instructions_label)
 		displayLayout.addLayout(textLayout)
-
-		self.table = QTableView()
-		displayLayout.addWidget(self.table)
 
 		self.specific_details=QWidget(self)
 		self.form_layout = QFormLayout()
@@ -247,6 +249,7 @@ class ThirdDisplay(QWidget):
 		#self.entry5 = QLineEdit(self.specific_details, placeholderText="['Column1', 'Column2']", clearButtonEnabled=True)
 		self.entry5 = QListWidget(self.specific_details)
 		self.entry5.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+		self.entry5.setSelectionRectVisible(True)
 		self.entry5_label = 'Array of Coding Columns:'
 		self.form_layout.addRow(self.entry5_label, self.entry5)
 
@@ -266,10 +269,10 @@ class FourthDisplay(QWidget):
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
-		self.temp_label = QLabel("Welcome to the Fourth Display")
+		self.temp_label = QLabel("Almost there!")
 		displayLayout.addWidget(self.temp_label)
 		
-		self.info_label = QLabel("Your SpliceHelper File is now ready! Let me know the directory and filename where you want to save it:")
+		self.info_label = QLabel("Let me know the directory and filename where you want to save your splice file:")
 		displayLayout.addWidget(self.info_label)
 
 		self.main_file_input_label = QLabel("Where should I save it?")
@@ -423,7 +426,7 @@ class SpliceHelper:
 
 	def __selectFile(self, type):
 		#home_dir = str(Path.home())
-		fname = QFileDialog.getOpenFileName(self.__view.page1, 'Open file') #, home_dir)
+		fname = QFileDialog.getOpenFileName(self.__view.page1, 'Open file', "", "Data Files(*.csv *.xls *.xlsx *.xlsm *.xlsb *.odf *.ods *.odt)") #, home_dir)
 		if fname[0]:
 			if type == 'main':
 				self.__view.page1.textlabel.setText(fname[0])
