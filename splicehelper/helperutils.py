@@ -148,6 +148,25 @@ def print_file(df, splice_header, outputfilename, title):
 def get_column_names(df):
 	return list(df.columns)
 
+def run_splice_helper_gui(input_data, soundfile, coding_array, isi1, isi2, outputfilename, title, stringColumn= '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
+	try: 
+		print('Running the helper:')
+		df = input_data
+		print(get_column_names(df))
+		print('Add Splice:')
+		df = create_df_with_splice_columns(df, isi1, isi2, isi3, stringColumn)
+		print('Subsetting:')
+		df = create_subset_df_for_list(df, soundfile, coding_array)
+		print('Adding Waves')
+		df = add_wav_to_stimuli(df, soundfile)
+		print('Creating OUtput Files:')
+		splice_header = configure_splice_header(coding_array)
+		print_file(df, splice_header, outputfilename, title)
+		return 'Success'
+	except Exception as e:
+		print(e)
+
+
 def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, stringColumn= '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
 	try: 
 		print('Running the helper:')
@@ -161,7 +180,7 @@ def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfil
 			df = merge_df_with_another(df, second_df, merge_on_main_df, merge_on_other_df)
 			print(df.head())
 		print('Add Splice:')
-		df = create_df_with_splice_columns(df, isi1, isi2)
+		df = create_df_with_splice_columns(df, isi1, isi2, isi3, stringColumn)
 		print('Subsetting:')
 		df = create_subset_df_for_list(df, soundfile, coding_array)
 		print('Adding Waves')
