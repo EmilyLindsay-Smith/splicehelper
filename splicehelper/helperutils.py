@@ -133,7 +133,7 @@ def print_file(df, splice_header, outputfilename, title):
 	title = '! ' + title + '\n'
 	#Creates temporary .csv to avoid extra spaces created by df.to_String() - this is removed
 	temp = outputfilename + '.csv' #so if multiple runs at once no clashes
-	df.to_csv(temp, index=None, sep=' ', header=False, na_rep='NULL', quoting=3, escapechar=' ', encoding='utf-8')
+	df.to_csv(temp, index=None, sep=' ', header=True, na_rep='NULL', quoting=3, escapechar=' ', encoding='utf-8')
 	with open(temp, "r", encoding = 'utf-8') as f:
 		splice_contents = f.read()
 	os.remove(temp)
@@ -166,6 +166,29 @@ def run_splice_helper_gui(input_data, soundfile, coding_array, isi1, isi2, outpu
 	except Exception as e:
 		print(e)
 
+def run_splice_helper_gui_noprint(input_data, soundfile, coding_array, isi1, isi2, title, stringColumn= '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
+	try: 
+		print('Running the helper:')
+		df = input_data
+		print(get_column_names(df))
+		print('Add Splice:')
+		df = create_df_with_splice_columns(df, isi1, isi2, isi3, stringColumn)
+		print('Subsetting:')
+		df = create_subset_df_for_list(df, soundfile, coding_array)
+		print('Adding Waves')
+		df = add_wav_to_stimuli(df, soundfile)
+		return df
+	except Exception as e:
+		print(e)
+
+def run_splice_helper_gui_justprint(outputfilename, inputdata, title, coding_array):
+	try:
+		print('Creating Output Files:')
+		splice_header = configure_splice_header(coding_array)
+		print_file(inputdata, splice_header, outputfilename, title)
+		return 'Success'
+	except Exception as e:
+		print(e)
 
 def run_splice_helper(input_file, soundfile, coding_array, isi1, isi2, outputfilename, title, stringColumn= '', isi3 = '', input_file2 = '', merge_on_main_df='', merge_on_other_df=''):
 	try: 

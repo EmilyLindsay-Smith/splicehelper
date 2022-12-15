@@ -1,0 +1,140 @@
+! A
+
+CODEHEAD, Code Dummy 
+
+ZEROCROSS,on
+PAUSE,4000
+BLEEP; PAUSE,1000; BLEEP; PAUSE,1000; BLEEP;
+PAUSE,2000
+
+!
+! Countdown
+!
+
+BLEEP; PAUSE,300; PULSE; STR,5,1000; PAUSE,1000; CODE,0 0
+BLEEP; PAUSE,300; PULSE; STR,4,1000; PAUSE,1000; CODE,0 0
+BLEEP; PAUSE,300; PULSE; STR,3,1000; PAUSE,1000; CODE,0 0
+BLEEP; PAUSE,300; PULSE; STR,2,1000; PAUSE,1000; CODE,0 0
+BLEEP; PAUSE,300; PULSE; STR,1,1000; PAUSE,1000; CODE,0 0
+
+! Bleep1 Code Bleep2 Bleep3 Code Dummy
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair1-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair2-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair1-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair3-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair2-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair4-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair3-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair4-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, GAP, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair5-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair6-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair5-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair7-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair6-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair8-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair7-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair9-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair8-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filer, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, GAP, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair10-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair9-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair11-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair10-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair12-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair11-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair13-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair12-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair13-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, GAP, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair14-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair14-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair16-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair15-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair17-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair16-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair17-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, GAP, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair18-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair19-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair18-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair20-P, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair19-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, filler, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, pair20-T, 3 ; PAUSE, 2; CODE, Code.wav 0
+BLEEP; PAUSE, 1; Code.wav PULSE; STR, nonce, 3 ; PAUSE, 2; CODE, Code.wav 0

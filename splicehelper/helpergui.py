@@ -27,7 +27,8 @@ from PyQt6.QtWidgets import(
 	QTableView, 
 	QComboBox,
 	QListWidget,
-	QAbstractItemView
+	QAbstractItemView,
+	QScrollArea
 )
 
 from helperutils import run_splice_helper
@@ -36,21 +37,23 @@ class MainWindow(QMainWindow):
 	def __init__(self):
 		super().__init__()
 		self.setWindowTitle("SpliceHelper")
-		self.setGeometry(300, 200, 700, 700)
-		self.setFixedSize(700,700)
+		self.setGeometry(200, 100, 700, 500)
+		#self.setFixedSize(700,700)
 
 		#Define Layouts and add them together
-		pageLayout = QVBoxLayout()
+		self.scrollArea = QScrollArea()
+		self.pageLayout = QVBoxLayout()
+		self.pageLayout2 = QVBoxLayout()
 		self.stackLayout = QStackedLayout()
 		self.headingLayout = QVBoxLayout()
 		self.buttonLayout =QHBoxLayout()
 
-		pageLayout.addLayout(self.headingLayout)
-		pageLayout.addLayout(self.stackLayout)
-		pageLayout.addLayout(self.buttonLayout)
+		self.pageLayout.addLayout(self.headingLayout)
+		self.pageLayout.addLayout(self.stackLayout)
+		self.pageLayout2.addLayout(self.buttonLayout)
 
 		#Define headingLayout Elements
-		self.header_label = QLabel("Welcome to SpliceHelper")
+		self.header_label = QLabel("SpliceHelper")
 		self.header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 		self.header_label.setStyleSheet("font-weight: bold")
 		self.headingLayout.addWidget(self.header_label)
@@ -69,16 +72,31 @@ class MainWindow(QMainWindow):
 		self.stackLayout.addWidget(self.page4)
 
 		#Define buttonLayout buttons to display all the time
-		self.backbtn = QPushButton("Back") #the back button starts with no label
+		self.backbtn = QPushButton("") #the back button starts with no label
 		self.buttonLayout.addWidget(self.backbtn)
-		self.btn = QPushButton("Next")
+		self.btn = QPushButton("Specify Your Variables")
 		self.buttonLayout.addWidget(self.btn)
 	
 			#Create Central Widget
 		widget = QWidget()
-		widget.setLayout(pageLayout)
-		self.setCentralWidget(widget)
+		widget.setLayout(self.pageLayout)
+		self.scrollArea.setWidget(widget)
+		self.mainLayout = QVBoxLayout()
+		self.mainLayout.addWidget(self.scrollArea)
+		widgetMain1 = QWidget()
+		widgetMain1.setLayout(self.mainLayout)
 
+		widgetMain2 = QWidget()
+		widgetMain2.setLayout(self.pageLayout2)
+
+		mainPageLayout = QVBoxLayout()
+		mainPageLayout.addWidget(widgetMain1)
+		mainPageLayout.addWidget(widgetMain2)
+		finalPageWidget = QWidget()
+		finalPageWidget.setLayout(mainPageLayout)
+
+#		self.setCentralWidget(self.scrollArea)
+		self.setCentralWidget(finalPageWidget)
 
 class FirstDisplay(QWidget):
 	#TODO: Welcome to SpliceHelper. Import main file & second file if needed
@@ -98,7 +116,7 @@ class FirstDisplay(QWidget):
 		
 		greeting_label_text = "Let me help you build splice files"
 		greeting_label_text += " for use in splice.pl at the Language and Brain Lab, Oxford University.\n\n"
-		greeting_label_text += "To get started, let me know what file you'd like to build from.\n"
+		greeting_label_text += "To get started, let me know what file you'd like to build from.\n\n"
 		greeting_label_text += "I can handle the following file formats:  "
 		greeting_label_text += ".csv, .xls, .xlsx, .xlsm, .xlsb, .odf, .ods, .odt\n"
 		greeting_label_text += "(But I do assume you're using Sheet 1 of Excel.) "
@@ -126,7 +144,7 @@ class FirstDisplay(QWidget):
 
 		displayLayout.addWidget(self.table)
 
-		merge_explanation_text = "If all your stimuli and data are in that file, great! Press Next.\n\n"
+		merge_explanation_text = "If all your stimuli and data are in that file, great!.\n\n"
 		merge_explanation_text += "However, if you need to merge the above file with another one, let me know the file here:"""
 		self.merge_explanation_label=QLabel(merge_explanation_text)	
 		self.merge_explanation_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -158,19 +176,9 @@ class SecondDisplay(QWidget):
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
-		self.temp_label = QLabel("Welcome to the Second Display")
+		self.temp_label = QLabel("Let's Merge Your Files!")
 		displayLayout.addWidget(self.temp_label)
 		
-		self.table_main_label = QLabel("Your Main File:")
-		displayLayout.addWidget(self.table_main_label)
-		self.table_main = QTableView()
-		displayLayout.addWidget(self.table_main)
-
-		self.table_merge_label = QLabel("Your Merge File:")
-		displayLayout.addWidget(self.table_merge_label)
-		self.table_merge = QTableView()
-		displayLayout.addWidget(self.table_merge)
-
 		self.instructions_label = QLabel("I need to know which column your files have in common so I can merge them:")
 		displayLayout.addWidget(self.instructions_label)
 
@@ -190,6 +198,18 @@ class SecondDisplay(QWidget):
 		self.form_layout.addRow(self.entry2_label, self.entry2)
 
 		displayLayout.addWidget(self.merge_details)
+
+
+		self.table_main_label = QLabel("Your Main File:")
+		displayLayout.addWidget(self.table_main_label)
+		self.table_main = QTableView()
+		displayLayout.addWidget(self.table_main)
+
+		self.table_merge_label = QLabel("Your Merge File:")
+		displayLayout.addWidget(self.table_merge_label)
+		self.table_merge = QTableView()
+		displayLayout.addWidget(self.table_merge)
+
 		self.setLayout(displayLayout)
 
 	def text_changed(self, s):
@@ -203,7 +223,7 @@ class ThirdDisplay(QWidget):
 		super().__init__()
 		displayLayout = QVBoxLayout()
 		textLayout = QHBoxLayout()
-		self.temp_label = QLabel("Here is your current data source - go back to make changes if it's not right")
+		self.temp_label = QLabel("Here is your current data source - go back to make changes if it's not right \n Note you can scroll horizontally to see all rows, and click on the border between columns to expand them \n")
 		displayLayout.addWidget(self.temp_label)
 		
 		self.table = QTableView()
@@ -250,6 +270,7 @@ class ThirdDisplay(QWidget):
 		self.entry5 = QListWidget(self.specific_details)
 		self.entry5.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
 		self.entry5.setSelectionRectVisible(True)
+		self.entry5.sizeHint().height()
 		self.entry5_label = 'Array of Coding Columns:'
 		self.form_layout.addRow(self.entry5_label, self.entry5)
 
@@ -269,10 +290,9 @@ class FourthDisplay(QWidget):
 	def __init__(self):
 		super().__init__()
 		displayLayout = QVBoxLayout()
-		self.temp_label = QLabel("Almost there!")
-		displayLayout.addWidget(self.temp_label)
-		
-		self.info_label = QLabel("Let me know the directory and filename where you want to save your splice file:")
+
+
+		self.info_label = QLabel("If you're happy, let me know the directory and filename where you want to save your splice file.\nDon't worry, the Codehead will be included")
 		displayLayout.addWidget(self.info_label)
 
 		self.main_file_input_label = QLabel("Where should I save it?")
@@ -285,10 +305,16 @@ class FourthDisplay(QWidget):
 		layout_form1.addWidget(self.textlabel)
 		self.create_splice_btn = QPushButton("Make My Splice Files")
 		layout_form1.addWidget(self.create_splice_btn)
-		self.successlabel = QLabel("Click Make My Splice Files")
+		self.successlabel = QLabel("")
 		layout_form1.addWidget(self.successlabel)
 		displayLayout.addLayout(layout_form1)
+	
+		self.temp_label = QLabel("Here is what your splice file looks like without the Codehead. \n Note you can scroll horizontally to see all rows, and click on the border between columns to expand them \n If you're not happy, press Back to make changes")
+		displayLayout.addWidget(self.temp_label)
 		
+
+		self.table = QTableView()
+		displayLayout.addWidget(self.table)
 		self.setLayout(displayLayout)
 
 	def __selectFile(self):
@@ -331,18 +357,42 @@ class SpliceHelper:
 		self.__view = view
 		self.__model = model
 		self.__connectSignalsAndSlots()
+		self.__changeButtonText()
 
 	def __connectSignalsAndSlots(self):
-		self.__view.btn.pressed.connect(lambda bool=0, index=1:print(index))
+
+		#self.__view.btn.pressed.connect(lambda bool=0 :self.__changeButtonText())
+		#self.__view.btn.pressed.connect(lambda bool=0 :self.__changeButtonText())
+		self.__view.btn.pressed.connect(lambda bool=0 :self.__activate_tab())
 		self.__view.backbtn.pressed.connect(lambda bool=0: self.__back_tab())
 
 		self.__view.page1.file_input_button.pressed.connect(lambda type='main':self.__selectFile(type))
 		self.__view.page1.mergefile_input_button.pressed.connect(lambda type='merge':self.__selectFile(type))
-		self.__view.btn.pressed.connect(lambda bool=0 :self.__activate_tab())
-		self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__collectMe())
+		
+	#	self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__collectMe())
 		self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__printMe())
-		self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__runme())
+	#	self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__runme())
+		self.__view.page4.create_splice_btn.pressed.connect(lambda bool=0: self.__printsplice())
 		print('Tester')
+
+	def __changeButtonText(self):
+		print('Called Me')
+		if self.__view.page1.isVisible():
+			if self.__view.page1.textlabel2 != '':
+				self.__view.btn.setText('Merge Your Files') 
+			else:
+				self.__view.btn.setText('Specify Your Variables') 
+			self.__view.backbtn.setText('')
+		elif self.__view.page2.isVisible():
+			self.__view.btn.setText('Specify Your Variables') 
+			self.__view.backbtn.setText('Back')
+		elif self.__view.page3.isVisible():
+			self.__view.btn.setText('Create Splice File') 
+			self.__view.backbtn.setText('Back')
+		elif self.__view.page4.isVisible():
+
+			self.__view.btn.setText('Create Another Splice File') 
+			self.__view.backbtn.setText('Back')
 
 	def __runme(self):
 		try:
@@ -360,20 +410,62 @@ class SpliceHelper:
 			print('Completed')
 		except Exception:
 			print("Error: ")
+	
+	def __runsplicehelper(self):
+		try:
+			self.__collectMe()
 		
+			self.data_output = run_splice_helper_gui_noprint(self.data, 
+			self.auditorystimuli, 
+			self.coding_array,
+			self.isi1, 
+			self.isi2, 
+			self.title, 
+			self.visualstimuli, 
+			self.isi3)
+			print(self.data)
+		except Exception as e:
+			print(e)
+		try:
+			self.model = TableModel(self.data_output)
+			self.__view.page4.table.setModel(self.model)
+		except Exception:
+			print("Error: ", Exception)	
+
+	def __printsplice(self):
+		try:
+			self.__collectMe()
+			#print(self.outputfilename, self.data_output.head(), self.title)
+			run_splice_helper_gui_justprint(self.outputfilename, self.data_output, self.title, self.coding_array)
+			self.__view.page4.successlabel.setText('Your SpliceHelper File is finished! \n Click Next to make another file')
+			print('Completed')
+		except Exception:
+			print("Error: ", Exception)	
+
 
 	def __activate_tab(self):
+		self.__view.scrollArea.verticalScrollBar().setValue(0)
 		current = self.__view.stackLayout.currentIndex()
 		if current == (self.__view.stackLayout.count() -1 ):
-			self.__view.btn.setText('Return to Start')
 			self.__view.stackLayout.setCurrentIndex(0)
-		elif (current == 0) & (self.__view.page1.textlabel2.text() == ''):
+		#	self.__view.backbtn.setText('')
+		#	self.__view.btn.setText('Next')
+		elif (current == 0):
+		#	self.__view.backbtn.setText('Back')
+			if (self.__view.page1.textlabel2.text() == ''):
 				self.__view.stackLayout.setCurrentIndex(current+2)
-		elif current ==1 :
+			else:
+				self.__view.stackLayout.setCurrentIndex(current+1)
+		elif current == 1 :
 			self.__mergeFiles()
 			self.__view.stackLayout.setCurrentIndex(current+1)
+		#	self.__view.btn.setText('Create Splice File')
+		elif current == 2 :
+			self.__runsplicehelper()
+			self.__view.stackLayout.setCurrentIndex(current+1)	
 		else:
 			self.__view.stackLayout.setCurrentIndex(current+1)
+		self.__changeButtonText()
 
 	def __back_tab(self):
 		current = self.__view.stackLayout.currentIndex()
@@ -381,6 +473,7 @@ class SpliceHelper:
 			self.__view.stackLayout.setCurrentIndex(current-2)
 		else:
 			self.__view.stackLayout.setCurrentIndex(current-1)
+		self.__changeButtonText()
 
 	def __mergeFiles(self):
 		self.input_file = create_df_from_input(self.__view.page1.textlabel.text())
@@ -395,7 +488,11 @@ class SpliceHelper:
 		print("Collector")
 		self.input_file= self.__view.page1.textlabel.text()
 		self.auditorystimuli= self.__view.page3.entry4.currentText()
+		if self.auditorystimuli == 'None':
+			self.auditorystimuli = ''
 		self.visualstimuli=self.__view.page3.entry8.currentText()
+		if self.visualstimuli == 'None':
+			self.visualstimuli = ''
 		self.coding_array = []
 		[self.coding_array.append(i.text()) for i in self.__view.page3.entry5.selectedItems()]
 		self.isi1= self.__view.page3.entry2.text()
@@ -435,6 +532,7 @@ class SpliceHelper:
 				print(self.data)
 			else:
 				self.__view.page1.textlabel2.setText(fname[0])
+				self.__changeButtonText()
 				self.data2 = create_df_from_input(fname[0])
 				self.model2 = TableModel(self.data2)
 				self.__view.page1.table2.setModel(self.model2)
@@ -453,7 +551,9 @@ class SpliceHelper:
 		self.__view.page3.entry8.clear()
 		self.__view.page3.entry5.clear()
 		self.__view.page2.entry1.addItems(self.datacolumns)
+		self.__view.page3.entry4.addItems(['None'])
 		self.__view.page3.entry4.addItems(self.datacolumns)
+		self.__view.page3.entry8.addItems(['None'])
 		self.__view.page3.entry8.addItems(self.datacolumns)
 		self.__view.page3.entry5.addItems(self.datacolumns)
 
